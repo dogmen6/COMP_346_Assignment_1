@@ -537,7 +537,7 @@ public class Network implements Runnable{
      */
     public String toString()
     {
-        return ("\n Network status " + getNetworkStatus() + "Input buffer " + getInBufferStatus() + "Output buffer " + getOutBufferStatus());
+        return ("\n Network status " + getNetworkStatus() + "Input buffer " + getInBufferStatus() + "Output.md buffer " + getOutBufferStatus());
     }
 
     /***********************************************************************************************************************************************

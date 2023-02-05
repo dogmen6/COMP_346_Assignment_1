@@ -38,7 +38,7 @@ public class Server implements Runnable{
         transaction = new Transactions();
         account = new Accounts[maxNbAccounts];
         objNetwork = new Network("server");
-        System.out.println("\n Inializing the Accounts database ...");
+        System.out.println("\n Initializing the Accounts database ...");
         initializeAccounts( );
         System.out.println("\n Connecting server to network ...");
         if (!(objNetwork.connect(objNetwork.getServerIP())))
