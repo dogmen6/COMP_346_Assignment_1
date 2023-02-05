@@ -15,7 +15,7 @@ import java.util.InputMismatchException;
  * @author Kerly Titus
  */
 
-public class Client {
+public class Client implements Runnable{
 
     private static int numberOfTransactions;   		/* Number of transactions to process */
     private static int maxNbTransactions;      		/* Maximum number of transactions */
@@ -112,7 +112,7 @@ public class Client {
 
         try
         {
-            inputStream = new Scanner(new FileInputStream("transaction.txt"));
+            inputStream = new Scanner(new FileInputStream("src/transaction.txt"));
         }
         catch(FileNotFoundException e)
         {
@@ -210,9 +210,23 @@ public class Client {
      */
     public void run()
     {
-        Transactions transact = new Transactions();
-        long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
+        long time = System.currentTimeMillis();
 
-        /* Implement here the code for the run method ... */
+        while(!objNetwork.getServerConnectionStatus().equals("connected"))
+            Thread.yield();
+
+        if (getClientOperation().equals("sending")){
+            sendTransactions();
+        }
+        else if (getClientOperation().equals("receiving")){
+            Transactions transaction = new Transactions();
+            receiveTransactions(transaction);
+            objNetwork.disconnect(objNetwork.getClientIP());
+        }
+        else{
+            System.out.println("Error: The client operation type is wrong");
+            System.exit(1);
+        }
+        System.out.println("Terminating " + clientOperation + " client thread - " + " Running time: " + (System.currentTimeMillis() - time) + " ms");
     }
 }

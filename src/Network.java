@@ -9,7 +9,7 @@
  *
  * @author Kerly Titus
  */
-public class Network {
+public class Network implements Runnable{
 
     private static int maxNbPackets;                           /* Maximum number of simultaneous transactions handled by the network buffer */
     private static int inputIndexClient, inputIndexServer, outputIndexServer, outputIndexClient;                   /* Network buffer indices for accessing the input buffer (inputIndexClient, outputIndexServer) and output buffer (inputIndexServer, outputIndexClient) */
@@ -552,11 +552,14 @@ public class Network {
      */
     public void run()
     {
-        System.out.println("\n DEBUG : Network.run() - starting network thread");
 
-        while (true)
+        long time = System.currentTimeMillis();
+
+        while (!getServerConnectionStatus().equals("disconnected") && !getClientConnectionStatus().equals("disconnected"))
         {
-            /* Implement here the code for the run method ... */
+            Thread.yield();
         }
+
+        System.out.println("Terminating network thread - Running time: " + (System.currentTimeMillis() - time) + " ms");
     }
 }
